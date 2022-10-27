@@ -3,21 +3,14 @@
 function create_recommendly_database()
 {
     global $wpdb;
-    $table_name = $wpdb->prefix . "recommendly_posts";
+    $table_name = $wpdb->prefix . "recommendly";
     $charset_collate = $wpdb->get_charset_collate();
-
-    // $sql = "CREATE TABLE $table_name (
-    //     id mediumint(9) NOT NULL AUTO_INCREMENT,
-    //     time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-    //     island_name MEDIUMTEXT NOT NULL,
-    //     dodo_code MEDIUMTEXT NOT NULL,
-    //     protection BOOLEAN NOT NULL default 0, 
-    //     PRIMARY KEY (id)
-    // ) $charset_collate;";
     $sql = "CREATE TABLE $table_name (
-            PostsOrder mediumint(9) NOT NULL AUTO_INCREMENT primary key, 
-            PostIDs mediumint(9) NOT NULL,
-            Similiarity FLOAT NOT NULL
+            id mediumint(9) NOT NULL AUTO_INCREMENT primary key, 
+            postid mediumint(9) NOT NULL,
+            simpid mediumint(9) NOT NULL,
+            score FLOAT NOT NULL,
+            category mediumint(9) NOT NULL
             ) $charset_collate;";
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
