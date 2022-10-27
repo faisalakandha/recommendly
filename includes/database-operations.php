@@ -2,7 +2,9 @@
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
 
-function currentPostRecommendations($postId, $simpid, $score,$category)
+// Write all the posts that are related to a specific post and their scores to database
+
+function CreateSimilarPosts($postId, $simpid, $score,$category)
 {
     global $wpdb;
     $table_name = $wpdb->prefix . "recommendly_posts";
@@ -10,4 +12,18 @@ function currentPostRecommendations($postId, $simpid, $score,$category)
     dbDelta( $sql );
 }
 
-?>
+// Get all the posts related to a specific post in a specific category
+
+function GetAllRelatedPosts($postId, $category)
+{
+    global $wpdb;
+    
+    $sql = "SELECT postid FROM wp_recommendly WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 5";
+    $result = $wpdb->get_results($sql);
+    if ( $wpdb->last_error ) 
+    {
+        echo 'wpdb error: ' . $wpdb->last_error;
+    }
+
+    return $result;
+}
