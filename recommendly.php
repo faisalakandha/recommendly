@@ -10,6 +10,9 @@
 **/
 
 require_once(plugin_dir_path(__FILE__) . 'admin/admin-menu.php');
+require_once(plugin_dir_path(__FILE__) . 'init.php');
 
+// Initial Activation 
+activation_initial_functions();
 
 ?>

@@ -15,7 +15,7 @@ function create_recommendly_database()
     //     PRIMARY KEY (id)
     // ) $charset_collate;";
     $sql = "CREATE TABLE $table_name (
-            PostsOrder mediumint(9) NOT NULL AUTO_INCREMENT, 
+            PostsOrder mediumint(9) NOT NULL AUTO_INCREMENT primary key, 
             PostIDs mediumint(9) NOT NULL,
             Similiarity FLOAT NOT NULL
             ) $charset_collate;";
