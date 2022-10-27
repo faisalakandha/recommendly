@@ -1,5 +1,7 @@
 <?php
 
+require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
+
 function create_recommendly_database()
 {
     global $wpdb;
@@ -12,9 +14,7 @@ function create_recommendly_database()
             score FLOAT NOT NULL,
             category mediumint(9) NOT NULL
             ) $charset_collate;";
-
-require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
-dbDelta( $sql );
+    dbDelta( $sql );
 
 }
 
