@@ -7,7 +7,7 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
 function CreateSimilarPosts($postId, $simpid, $score,$category)
 {
     global $wpdb;
-    $table_name = $wpdb->prefix . "recommendly_posts";
+    $table_name = $wpdb->prefix . "recommendly";
     $sql = "INSERT INTO {$table_name} (postid,simpid,score,category) VALUES ('{$postId}', '{$simpid}','{$score}','{$category}')";
     dbDelta( $sql );
 }
@@ -18,7 +18,7 @@ function GetAllRelatedPosts($postId, $category)
 {
     global $wpdb;
     
-    $sql = "SELECT postid FROM wp_recommendly WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 5";
+    $sql = "SELECT simpid FROM wp_recommendly WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 5";
     $result = $wpdb->get_results($sql);
     if ( $wpdb->last_error ) 
     {
@@ -27,3 +27,5 @@ function GetAllRelatedPosts($postId, $category)
 
     return $result;
 }
+
+?>
