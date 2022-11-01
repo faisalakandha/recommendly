@@ -8,11 +8,12 @@ function create_recommendly_database()
     $table_name = $wpdb->prefix . "recommendly";
     $charset_collate = $wpdb->get_charset_collate();
     $sql = "CREATE TABLE $table_name (
-            id mediumint(9) NOT NULL AUTO_INCREMENT primary key, 
+            id int(11) UNSIGNED AUTO_INCREMENT,      
             postid mediumint(9) NOT NULL,
             simpid mediumint(9) NOT NULL,
             score FLOAT NOT NULL,
-            category mediumint(9) NOT NULL
+            category mediumint(9) NOT NULL,
+            PRIMARY KEY (id)
             ) $charset_collate;";
     dbDelta( $sql );
 
