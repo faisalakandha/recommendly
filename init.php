@@ -11,7 +11,6 @@ require_once(plugin_dir_path(__FILE__) . 'includes/database-manager.php');
 function activation_initial_functions()
 {
     create_recommendly_database();
-    // dodo_add_user_role();
 }
 
 

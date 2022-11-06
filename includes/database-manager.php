@@ -11,7 +11,7 @@ function create_recommendly_database()
             id int(11) UNSIGNED AUTO_INCREMENT,      
             postid mediumint(9) NOT NULL,
             simpid mediumint(9) NOT NULL,
-            score FLOAT NOT NULL,
+            score FLOAT(15) NOT NULL,
             category mediumint(9) NOT NULL,
             PRIMARY KEY (id)
             ) $charset_collate;";
