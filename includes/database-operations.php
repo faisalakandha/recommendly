@@ -18,7 +18,7 @@ function GetAllRelatedPosts($postId)
 {
     global $wpdb;
     
-    $sql = "SELECT simpid FROM wp_recommendly WHERE category IN (SELECT DISTINCT category WHERE postid = '{$postId}') ORDER BY score";
+    $sql = "SELECT simpid FROM wp_recommendly WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 5";
     $result = $wpdb->get_results($sql);
     if ( $wpdb->last_error ) 
     {
