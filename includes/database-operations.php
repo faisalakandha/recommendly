@@ -14,11 +14,11 @@ function CreateSimilarPosts($postId, $simpid, $score,$category)
 
 // Get all the posts related to a specific post in a specific category
 
-function GetAllRelatedPosts($postId)
+function GetAllRelatedPosts($postId, $category)
 {
     global $wpdb;
     
-    $sql = "SELECT simpid FROM wp_recommendly WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 5";
+    $sql = "SELECT simpid FROM wp_recommendly WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 1";
     $result = $wpdb->get_results($sql);
     if ( $wpdb->last_error ) 
     {
