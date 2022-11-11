@@ -5,7 +5,7 @@
     }
     
     #output-content {
-                height: 346px;
+                height: 300px;
                 font-size: 16px;
                 width: 99%;
                 border: none;
@@ -28,7 +28,7 @@ function register_my_custom_menu_page()
 {
 
     add_menu_page(
-        __('Recommendly Settings', 'textdomain'),
+        __('Recommendly Manager', 'textdomain'),
         'Recommendly',
         'manage_options',
         'recommendly.php',
