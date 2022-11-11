@@ -83,7 +83,7 @@ function show_table()
             <p>This shows how many posts you already have and how many links can be built with them.</p>
             <p>However, it will be not as much as all the links shown on your website.</p>
             <p><b>Total Published Posts:</b> <?php echo wp_count_posts()->publish; ?></p>
-            <p><b>Total Links Count:</b> <?php echo GetLinksCount()[0]->links; ?></p>
+            <p><b>Total Links Created:</b> <?php echo GetLinksCount()[0]->links; ?></p>
         </div>
         <div style="margin-left:60px;">
             <u><h3>Logs:</h3></u>
