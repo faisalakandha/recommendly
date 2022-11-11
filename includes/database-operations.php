@@ -28,4 +28,19 @@ function GetAllRelatedPosts($postId, $category)
     return $result;
 }
 
+// Get links count
+function GetLinksCount()
+{
+    global $wpdb;
+
+    $sql = "SELECT COUNT(*) as links FROM wp_recommendly";
+    $result = $wpdb->get_results($sql);
+    if ( $wpdb->last_error ) 
+    {
+        echo 'wpdb error: ' . $wpdb->last_error;
+    }
+
+    return $result;
+}
+
 ?>
