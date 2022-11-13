@@ -1,15 +1,16 @@
 <?php
 
-require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
+require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+require_once(plugin_dir_path(__FILE__) . '/logging.php');
 
-global $wpdb; 
+global $wpdb;
 $GLOBALS['table_name'] = $table_name = $wpdb->prefix . "recommendly";
 // Write all the posts that are related to a specific post and their scores to database
 
-function CreateSimilarPosts($postId, $simpid, $score,$category)
+function CreateSimilarPosts($postId, $simpid, $score, $category)
 {
     $sql = "INSERT INTO {$GLOBALS['table_name']} (postid,simpid,score,category) VALUES ('{$postId}', '{$simpid}','{$score}','{$category}')";
-    dbDelta( $sql );
+    dbDelta($sql);
 }
 
 // Get all the posts related to a specific post in a specific category
@@ -19,11 +20,10 @@ function GetAllRelatedPosts($postId, $category)
     global $wpdb;
     $sql = "SELECT simpid FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 1";
     $result = $wpdb->get_results($sql);
-    if ( $wpdb->last_error ) 
-    {
+    if ($wpdb->last_error) {
         echo 'wpdb error: ' . $wpdb->last_error;
     }
-
+    plugin_log("One similar post found for the PostId {$postId} and CategoryID {$category} => {$result}");
     return $result;
 }
 
@@ -34,10 +34,10 @@ function GetLinksCount()
 
     $sql = "SELECT COUNT(*) as links FROM {$GLOBALS['table_name']}";
     $result = $wpdb->get_results($sql);
-    if ( $wpdb->last_error ) 
-    {
+    if ($wpdb->last_error) {
         echo 'wpdb error: ' . $wpdb->last_error;
     }
 
+    plugin_log( "Total Links Created: {$result[0]->links}" );
     return $result;
 }

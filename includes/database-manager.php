@@ -1,6 +1,7 @@
 <?php
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
+require_once(plugin_dir_path(__FILE__) . '/logging.php');
 
 function create_recommendly_database()
 {
@@ -16,7 +17,8 @@ function create_recommendly_database()
             PRIMARY KEY (id)
             ) $charset_collate;";
     dbDelta( $sql );
-
+    
+    plugin_log("Database Created Successfully");
 }
 
 ?>

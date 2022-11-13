@@ -1,7 +1,7 @@
 <?php
 
 require_once(plugin_dir_path(__FILE__) . '/create-simposts.php');
-
+require_once(plugin_dir_path(__FILE__) . '/logging.php');
 
 // Setting Custom Hook for WP CRON
 add_action('recommendly_cron_hook', 'CreateAllSimilarPosts');
