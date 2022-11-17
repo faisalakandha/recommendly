@@ -18,7 +18,6 @@ function create_recommendly_database()
             ) $charset_collate;";
     dbDelta( $sql );
     
-    plugin_log("Database Created Successfully");
 }
 
 ?>
