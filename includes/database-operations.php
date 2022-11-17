@@ -4,7 +4,7 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 require_once(plugin_dir_path(__FILE__) . '/logging.php');
 
 global $wpdb;
-$GLOBALS['table_name'] = $table_name = $wpdb->prefix . "recommendly";
+$GLOBALS['table_name'] = $wpdb->prefix . "recommendly";
 // Write all the posts that are related to a specific post and their scores to database
 
 function CreateSimilarPosts($postId, $simpid, $score, $category)

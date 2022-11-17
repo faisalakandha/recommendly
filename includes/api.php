@@ -1,5 +1,10 @@
 <?php
 require_once(plugin_dir_path(__FILE__) . '/logging.php');
+require_once(plugin_dir_path(__FILE__) . '/create-simposts.php');
+require_once(plugin_dir_path(__FILE__) . '/updates.php');
+
+global $wpdb;
+$GLOBALS['table_name'] = $table_name = $wpdb->prefix . "recommendly";
 
 function GetSimilarTextFromAPI($textA, $textB)
 {
@@ -31,6 +36,16 @@ function GetSimilarTextFromAPI($textA, $textB)
 
 add_action('rest_api_init', function () {
 
+    register_rest_route('recommendly/v1', 'createinternallinksforallposts', array(
+        'methods' => 'POST',
+        'callback' => 'CreateInternalLinksForAllPosts',
+        'args' => array(),
+        'permission_callback' => '__return_true'
+    ));
+});
+
+add_action('rest_api_init', function () {
+
     register_rest_route('recommendly/v1', 'saveapikey', array(
         'methods' => 'POST',
         'callback' => 'SaveApiKey',
@@ -38,6 +53,37 @@ add_action('rest_api_init', function () {
         'permission_callback' => '__return_true'
     ));
 });
+
+add_action('rest_api_init', function () {
+
+    register_rest_route('recommendly/v1', 'removeinternallinks', array(
+        'methods' => 'POST',
+        'callback' => 'RemoveInternalLinks',
+        'args' => array(),
+        'permission_callback' => '__return_true'
+    ));
+});
+
+add_action('rest_api_init', function () {
+
+    register_rest_route('recommendly/v1', 'updates', array(
+        'methods' => 'POST',
+        'callback' => 'CheckForUpdates',
+        'args' => array(),
+        'permission_callback' => '__return_true'
+    ));
+});
+
+add_action('rest_api_init', function () {
+
+    register_rest_route('recommendly/v1', 'cronoption', array(
+        'methods' => 'POST',
+        'callback' => 'CronOptions',
+        'args' => array(),
+        'permission_callback' => '__return_true'
+    ));
+});
+
 
 function SaveApiKey($req)
 {
@@ -57,6 +103,49 @@ function SaveApiKey($req)
     }
     
     return "OK:Recieved";
+}
+
+function CreateInternalLinksForAllPosts($req)
+{
+    $parameters = $req->get_params();
+    plugin_log("Creating Internal Links for All Existing Posts Started....");
+    CreateAllSimilarPosts();
+
+    return "Successfully Created Internal Links for All Posts !";
+
+}
+
+function RemoveInternalLinks($req)
+{
+    $parameters = $req->get_params();
+    plugin_log("Removing Internal Links for All Existing Posts Started....");
+
+    global $wpdb;
+
+    $sql = "DELETE FROM {$GLOBALS['table_name']}";
+    $result = $wpdb->get_results($sql);
+    if ($wpdb->last_error) {
+        echo 'wpdb error: ' . $wpdb->last_error;
+    }
+
+    plugin_log( "Total Links Created: {$result[0]->links}" );
+
+    return "Successfully Removed Internal Links for All Posts !";
+}
+
+function CheckForUpdates($req)
+{
+    $parameters = $req->get_params();
+    plugin_log("Checking for new post updates !");
+    CheckForNewUpdates();
+}
+
+function CronOptions($req)
+{
+    $parameters = $req->get_params();
+    $option = $parameters['option'];
+    plugin_log("Cron option $option is selected");
+    update_option('cron_links',$option);
 }
 
 
