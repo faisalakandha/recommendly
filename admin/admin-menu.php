@@ -1,3 +1,4 @@
+<?         ob_start(); ?>
 <!Doctype html>
 <html>
 
@@ -170,7 +171,7 @@
 
     function show_table()
     {
-        ob_start();
+
     ?>
 
         <div class="flex-container">
