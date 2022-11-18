@@ -102,7 +102,7 @@ function SaveApiKey($req)
         plugin_log("API Key Successfully Updated");
     }
     
-    return "OK:Recieved";
+    return "API Key Saved !";
 }
 
 function CreateInternalLinksForAllPosts($req)
@@ -138,6 +138,7 @@ function CheckForUpdates($req)
     $parameters = $req->get_params();
     plugin_log("Checking for new post updates !");
     CheckForNewUpdates();
+    return "Posts are successfully updated !";
 }
 
 function CronOptions($req)
@@ -146,6 +147,7 @@ function CronOptions($req)
     $option = $parameters['option'];
     plugin_log("Cron option $option is selected");
     update_option('cron_links',$option);
+    return "Automatic Update Option Successfully Selected !";
 }
 
 

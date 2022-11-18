@@ -96,7 +96,7 @@ function show_table()
                     .then((response) => response.text())
                     .then(function(data) {
                         $("#loadingSpinner").hide();
-                        alert("Task successfully Done");
+                        alert(data);
                     })
                     .catch((error) => {
                         console.error('Error:', error);
