@@ -15,15 +15,15 @@ function CreateSimilarPosts($postId, $simpid, $score, $category)
 
 // Get all the posts related to a specific post in a specific category
 
-function GetAllRelatedPosts($postId, $category)
+function GetAllRelatedPosts($postId)
 {
     global $wpdb;
-    $sql = "SELECT simpid FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 1";
+    $sql = "SELECT simpid FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}'"; // Change sql Query here
     $result = $wpdb->get_results($sql);
     if ($wpdb->last_error) {
         echo 'wpdb error: ' . $wpdb->last_error;
     }
-    plugin_log("One similar post found for the PostId {$postId} and CategoryID {$category} => {$result}");
+    plugin_log("Similar posts found for the PostId {$postId});
     return $result;
 }
 

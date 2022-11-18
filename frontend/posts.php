@@ -5,17 +5,18 @@ function ti_custom_javascript()
 {
   if (is_singular('post')) {
     $id = get_the_ID();
-    $post_categories = get_the_category($id);
 
-    $posts = array();
-    foreach ($post_categories as $cat) {
-      $container = GetAllRelatedPosts($id, $cat->term_id);
-      array_push($posts, get_post($container));
-    }
+    $postIds = GetAllRelatedPosts($id); //Check if it works perfectly
+
+    $args = array(
+      'post__in' => $postIds
+  );
+
+    $posts = get_posts($args);
     $datajs = json_encode($posts);
 ?>
     <script type="text/javascript">
-      var posts = JSON.stringify(<?php echo $datajs ?>)
+      var posts = JSON.stringify(<?php echo $datajs ?>);
       var postsObj = JSON.parse(posts);
 
       postsObj.forEach(function(current) {
