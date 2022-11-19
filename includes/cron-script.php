@@ -1,7 +1,6 @@
 <?php
 
 require_once(plugin_dir_path(__FILE__) . '/updates.php');
-require_once(plugin_dir_path(__FILE__) . '/logging.php');
 
 // Setting Custom Hook for WP CRON
 add_action('recommendly_cron_hook', 'CronCheckUpdates');

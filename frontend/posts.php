@@ -30,7 +30,7 @@ function ti_custom_javascript()
       var postsObj = JSON.parse(posts);
       if (postsObj != 0) {
         postsObj.forEach(function(current) {
-          console.log(current.post_title);
+          console.log("Post Title: " + current.post_title,"\nPost Content: " + current.post_content.substring(25,70) + "......", "\nPost_Link: " + current.guid);
         });
       }
     </script>

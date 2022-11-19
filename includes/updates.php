@@ -20,16 +20,18 @@ function CheckForNewUpdates()
                 'post_status' => 'publish',
                 'category' => $cat->term_id
             );
+            $post_list_cat = get_posts($args_cat);
+            foreach ($post_list_cat as $current) 
+            {
+                global $wpdb;
+                $GLOBALS['table_name'] = $wpdb->prefix . "recommendly";
+                $sql = "SELECT postid FROM {$GLOBALS['table_name']} WHERE postid = '{$post->ID}' AND category = '{$cat->term_id}' AND simpid = '{$current->ID}'";
+                $result = $wpdb->get_results($sql);
 
-            global $wpdb;
-            $GLOBALS['table_name'] = $wpdb->prefix . "recommendly";
-            $sql = "SELECT postid FROM {$GLOBALS['table_name']} WHERE postid = '{$post->ID}' AND category = '{$cat->term_id}'";
-            $result = $wpdb->get_results($sql);
-
-            if (empty($result)) {
-                $post_list_cat = get_posts($args_cat);
-                foreach ($post_list_cat as $current) {
-                    if ($post->ID != $current->ID) {
+                if (empty($result)) 
+                {
+                    if ($post->ID != $current->ID) 
+                    {
                         plugin_log($cat->term_id);
                         plugin_log($post_list_cat);
                         sleep(20);
