@@ -5,11 +5,17 @@ function ti_custom_javascript()
 {
   if (is_singular('post')) {
     $id = get_the_ID();
-
-    $postIds = GetAllRelatedPosts($id); //Check if it works perfectly
+    $post_categories = get_the_category($id);
+    $postIds = array();
+    foreach ($post_categories as $cat) {
+      $container = GetAllRelatedPosts($id, $cat->term_id);
+      array_push($postIds, $container);
+    }
 
     $args = array(
-      'post__in' => $postIds
+      'post__in' => $postIds,
+      'post_type' => 'post',
+      'post_status' => 'publish'
   );
 
     $posts = get_posts($args);

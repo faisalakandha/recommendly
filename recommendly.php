@@ -33,5 +33,6 @@ add_action('admin_init', 'load_plugin');
 
 require_once(plugin_dir_path(__FILE__) . 'admin/admin-menu.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/cron-script.php');
+require_once(plugin_dir_path(__FILE__) . 'includes/create-simposts.php');
 require_once(plugin_dir_path(__FILE__) . 'frontend/posts.php');
 require_once(plugin_dir_path(__FILE__) . 'deactivation.php');

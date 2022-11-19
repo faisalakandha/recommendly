@@ -1,4 +1,5 @@
 <?php
+require_once(plugin_dir_path(__FILE__) . '/utility.php');
 
 function CheckForNewUpdates()
 {
@@ -32,7 +33,7 @@ function CheckForNewUpdates()
                         plugin_log($cat->term_id);
                         plugin_log($post_list_cat);
                         sleep(20);
-                        $result = GetSimilarTextFromAPI(wp_strip_all_tags($post->post_content), wp_strip_all_tags($current->post_content));
+                        $result = GetSimilarTextFromAPI(strip_post_content($post->post_content), strip_post_content($current->post_content));
                         CreateSimilarPosts($post->ID, $current->ID, $result, $cat->term_id);
                         $percentage = $result * 100;
                         plugin_log("PostID {$post->ID} is {$percentage}% similar to PostID {$current->ID} Where CategoryID is {$cat->term_id}");
@@ -45,7 +46,8 @@ function CheckForNewUpdates()
 
 function CronCheckUpdates()
 {
-    if (get_option('cron_links') == 1) {
+    if (get_option('cron_links') == 1) 
+    {
         $args = array(
             'post_type' => 'post',
             'posts_per_page' => -1,

@@ -23,8 +23,7 @@ function GetSimilarTextFromAPI($textA, $textB)
 
         if (curl_errno($ch)) {
             $error = curl_error($ch);
-            plugin_log("NlpCloud API Call Failed:");
-            plugin_log($error);
+            plugin_log("NlpCloud API Call Failed: {$error}");
         }
 
         $res_json = json_decode($result);
@@ -127,8 +126,6 @@ function RemoveInternalLinks($req)
     if ($wpdb->last_error) {
         echo 'wpdb error: ' . $wpdb->last_error;
     }
-
-    plugin_log( "Total Links Created: {$result[0]->links}" );
 
     return "Successfully Removed Internal Links for All Posts !";
 }

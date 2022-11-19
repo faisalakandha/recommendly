@@ -39,7 +39,7 @@ function show_table()
             }
 
             #output-content {
-                height: 450px;
+                height: 400px;
                 font-size: 12px;
                 width: 99%;
                 border: none;
