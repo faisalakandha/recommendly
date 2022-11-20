@@ -14,4 +14,30 @@ function strip_post_content($string) {
     return $string; 
 
 }
-?>
+
+function get_bigger_number($A, $B)
+{
+    $AC = floor($A / 630);
+    $BC = floor($B / 630);
+
+    if($AC <= $BC)
+    {
+        return $AC;
+    }
+    else
+    {
+        return $BC;
+    }
+}
+
+function get_smaller_string($A,$B)
+{
+    if(strlen($A) <= strlen($B))
+    {
+        return $A;
+    }
+    else 
+    {
+        return $B;
+    }
+}
