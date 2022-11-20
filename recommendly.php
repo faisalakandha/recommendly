@@ -31,8 +31,32 @@ function load_plugin()
 }
 add_action('admin_init', 'load_plugin');
 
+// Includes
+
 require_once(plugin_dir_path(__FILE__) . 'admin/admin-menu.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/cron-script.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/create-simposts.php');
 require_once(plugin_dir_path(__FILE__) . 'frontend/posts.php');
-require_once(plugin_dir_path(__FILE__) . 'deactivation.php');
+
+
+// Deactivation
+
+require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+ 
+function delete_database()
+{
+    global $wpdb;
+    $table = $wpdb->prefix . "recommendly";
+    $sql = "DROP TABLE $table";
+    delete_option('cron_links');
+    $wpdb->query($sql);
+
+}
+
+function my_deactivation() {
+    wp_clear_scheduled_hook( 'my_hourly_event' );
+    delete_database();
+    plugin_log("Plugin Deactivated !");
+}
+
+register_deactivation_hook( __FILE__, 'my_deactivation' );
