@@ -108,7 +108,7 @@ function CreateInternalLinksForAllPosts($req)
 {
     $parameters = $req->get_params();
     plugin_log("Creating Internal Links for All Existing Posts Started....");
-    CreateAllSimilarPosts();
+    CheckForNewUpdates();
 
     return "Successfully Created Internal Links for All Posts !";
 
