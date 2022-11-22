@@ -15,7 +15,7 @@ function ti_custom_javascript()
       }
     }
 
-    if (count($postIds) > 0) {
+    if (isset($postIds)) {
       $args = array(
         'post__in' => $postIds,
         'post_type' => 'post',
@@ -23,6 +23,11 @@ function ti_custom_javascript()
       );
       $posts = get_posts($args);
       $datajs = json_encode($posts);
+    }
+    
+    if (!isset($postIds)) 
+    {
+        $datajs = 0;
     }
 ?>
     <script type="text/javascript">
