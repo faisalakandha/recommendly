@@ -49,6 +49,7 @@ function delete_database()
     $table = $wpdb->prefix . "recommendly";
     $sql = "DROP TABLE $table";
     delete_option('cron_links');
+    delete_option('nlpcloud_apikey');
     $wpdb->query($sql);
 
 }

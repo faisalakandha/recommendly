@@ -15,7 +15,7 @@ function GetSimilarTextFromAPI($textA, $textB)
         curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"sentences\":[\"{$textA}\",\"{$textB}\"]}");
         $apikey = get_option('nlpcloud_apikey');
         $headers = array();
-        $headers[] = "Authorization: Token {$apikey}";
+        $headers[] = "Authorization: Token e25161be44e585f9eb980ac62253599235196064";
         $headers[] = 'Content-Type: application/json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
