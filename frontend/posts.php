@@ -8,14 +8,17 @@ function ti_custom_javascript()
     $id = get_the_ID();
     $post_categories = get_the_category($id);
     $postIds = array();
+  
     foreach ($post_categories as $cat) {
       $container = GetAllRelatedPosts($id, $cat->term_id);
       foreach ($container as $con) {
         array_push($postIds, $con->id);
       }
     }
-
-    if (isset($postIds)) {
+      
+  if (isset($postIds)) {
+      if( sizeof($postIds) != 0 )
+      {
       $args = array(
         'post__in' => $postIds,
         'post_type' => 'post',
@@ -23,14 +26,22 @@ function ti_custom_javascript()
       );
       $posts = get_posts($args);
       $datajs = json_encode($posts);
+      }
     }
     
     if (!isset($postIds)) 
     {
-        $datajs = 0;
+        if( sizeof($postIds) == 0 )
+        {
+        	$datajs = 0;
+        }
     }
+      
+    $output = implode(" ",$postIds);
 ?>
     <script type="text/javascript">
+      var postIds = "<?php echo $output ?>";
+      console.log(postIds);
       var posts = JSON.stringify(<?php echo $datajs ?>);
       var postsObj = JSON.parse(posts);
       if (postsObj != 0) {
