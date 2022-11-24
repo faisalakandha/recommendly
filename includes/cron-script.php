@@ -3,7 +3,7 @@
 require_once(plugin_dir_path(__FILE__) . '/updates.php');
 
 // Setting Custom Hook for WP CRON
-add_action('recommendly_cron_hook', 'CheckForNewUpdates');
+add_action('recommendly_cron_hook', 'CronCheckUpdates');
 
 
 // Prevent Duplicate Events
