@@ -87,5 +87,6 @@ function CronCheckUpdates()
     if (get_option('cron_links') == 1) 
     {      
         CheckForNewUpdates();
+        plugin_log("Cron Job is Running......");
     }
 }
