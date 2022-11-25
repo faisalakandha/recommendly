@@ -1,5 +1,6 @@
 <?php
 require_once(plugin_dir_path(__FILE__) . '/utility.php');
+require_once(plugin_dir_path(__FILE__) . '/logging.php');
 
 function CheckForNewUpdates()
 {
