@@ -9,10 +9,23 @@ function ti_custom_javascript()
     $post_categories = get_the_category($id);
     $postIds = array();
   
-    foreach ($post_categories as $cat) {
+    foreach ($post_categories as $cat) 
+    {
+      $myIds = array();
       $container = GetAllRelatedPosts($id, $cat->term_id);
-      foreach ($container as $con) {
-        array_push($postIds, $con->id);
+      foreach ($container as $con) 
+      {
+        array_push($myIds, $con->id);
+      }
+      
+      foreach(array_unique($myIds) as $myId)
+      {
+      	if(!in_array($myId, $postIds))
+        {
+        	array_push($postIds, $myId);
+            break;
+        }
+         
       }
     }
       
