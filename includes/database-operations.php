@@ -18,19 +18,7 @@ function CreateSimilarPosts($postId, $simpid, $score, $category)
 function GetAllRelatedPosts($postId, $category)
 {
     global $wpdb;
-    $sql = "SELECT simpid as id FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 1";
-    $result = $wpdb->get_results($sql);
-    if ($wpdb->last_error) {
-        echo 'wpdb error: ' . $wpdb->last_error;
-    }
-    plugin_log("One similar post found for the PostId {$postId} and CategoryID {$category}");
-    return $result;
-}
-
-function GetSecondRelatedPost($postId, $category)
-{
-    global $wpdb;
-    $sql = "SELECT simpid as id FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC LIMIT 1 OFFSET 1";
+    $sql = "SELECT simpid as id FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}' AND category = '{$category}' ORDER BY score DESC";
     $result = $wpdb->get_results($sql);
     if ($wpdb->last_error) {
         echo 'wpdb error: ' . $wpdb->last_error;
