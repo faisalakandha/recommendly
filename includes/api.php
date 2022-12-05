@@ -1,6 +1,5 @@
 <?php
 require_once(plugin_dir_path(__FILE__) . '/logging.php');
-require_once(plugin_dir_path(__FILE__) . '/create-simposts.php');
 require_once(plugin_dir_path(__FILE__) . '/updates.php');
 
 global $wpdb;
