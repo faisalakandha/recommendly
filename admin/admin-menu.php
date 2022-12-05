@@ -87,9 +87,10 @@ function show_table()
                 return fetch(url, {
                         method: 'POST', // or 'PUT',
                         mode: 'cors', // no-cors, *cors, same-origin
+                        credentials: 'same-origin',
                         headers: {
                             'Content-Type': 'application/json',
-
+                            'X-WP-Nonce' : "<?php echo wp_create_nonce('wp_rest') ?>"
                         },
                         body: JSON.stringify(data),
                     })

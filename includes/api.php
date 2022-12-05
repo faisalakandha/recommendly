@@ -39,7 +39,7 @@ add_action('rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'CreateInternalLinksForAllPosts',
         'args' => array(),
-        'permission_callback' => '__return_true'
+        'permission_callback' => 'IsUserAdmin'
     ));
 });
 
@@ -49,7 +49,7 @@ add_action('rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'SaveApiKey',
         'args' => array(),
-        'permission_callback' => '__return_true'
+        'permission_callback' => 'IsUserAdmin'
     ));
 });
 
@@ -59,7 +59,7 @@ add_action('rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'RemoveInternalLinks',
         'args' => array(),
-        'permission_callback' => '__return_true'
+        'permission_callback' => 'IsUserAdmin'
     ));
 });
 
@@ -69,7 +69,7 @@ add_action('rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'CheckForUpdates',
         'args' => array(),
-        'permission_callback' => '__return_true'
+        'permission_callback' => 'IsUserAdmin'
     ));
 });
 
@@ -79,7 +79,7 @@ add_action('rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'CronOptions',
         'args' => array(),
-        'permission_callback' => '__return_true'
+        'permission_callback' => 'IsUserAdmin'
     ));
 });
 
@@ -145,6 +145,11 @@ function CronOptions($req)
     plugin_log("Cron option $option is selected");
     update_option('cron_links',$option);
     return "Automatic Update Option Successfully Selected !";
+}
+
+function IsUserAdmin($request) 
+{ 
+    return current_user_can('manage_options');
 }
 
 
