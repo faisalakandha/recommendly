@@ -51,7 +51,7 @@ function ti_custom_javascript()
       var postsObj = JSON.parse(posts);
       if (postsObj != 0) {
         $(document).ready(function() {
-
+          var regex = /<[^>]+>|\s{2,}|\n|[^a-zA-Z0-9\s]/g;
           var paragraphs = $('p');
 
           // Use the .filter() method and a custom function to select only the paragraphs
@@ -62,17 +62,25 @@ function ti_custom_javascript()
             return $(this).text().trim().split(' ').length >= 50 && $(this).text().trim() !== '';
           });
 
-          // Use the .each() method to loop through each long, non-empty paragraph
-          longNonEmptyParagraphs.each(function(index) {
-            // Use the .attr() method to set the ID attribute of each paragraph
-            // to a unique value based on the index of the paragraph in the loop
-            $(this).attr('class', 'paragraph-' + index);
+          var pLength = longNonEmptyParagraphs.length - 1;
+
+          for (var i = 0; i <= postsObj.length - 1; i++) {
+            if (pLength >= 0) {
+              $(longNonEmptyParagraphs[pLength]).after("<p><u>Anchor Title: </u> <a href='" + postsObj[i].guid + "'>" + postsObj[i].post_title + "</a></p><p><u>Anchor Description: </u>" + postsObj[i].post_content.replace(regex, "")
+                .substring(0, 100) + "</a></p>");
+              pLength--;
+            } else {
+              pLength = longNonEmptyParagraphs.length - 1;
+              longNonEmptyParagraphs[pLength].html(postsObj[i].post_title);
+              pLength--;
+            }
+          }
+
+          postsObj.forEach(function(current) {
+            //start
+            console.log(current.post_title);
+            //end
           });
-        });
-        postsObj.forEach(function(current) {
-          //start
-          console.log(current.post_content);
-          //end
         });
       }
     </script>
