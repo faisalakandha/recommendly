@@ -66,8 +66,8 @@ function ti_custom_javascript()
 
           for (var i = 0; i <= postsObj.length - 1; i++) {
             if (pLength >= 0) {
-              $(longNonEmptyParagraphs[pLength]).after("<p><u>Anchor Title: </u> <a href='" + postsObj[i].guid + "'>" + postsObj[i].post_title + "</a></p><p><u>Anchor Description: </u>" + postsObj[i].post_content.replace(regex, "")
-                .substring(0, 100) + "</a></p>");
+              $(longNonEmptyParagraphs[pLength]).after("<div><h6 style='margin-bottom:9px; color: #1d2027;'>You Might Also Like This:</h6><a style='text-decoration: none; color:black' href='" + postsObj[i].guid + "'><div style='background-color:white; border: 1px solid #ccc; padding: 20px 10px 10px 10px; border-radius: 4px;'><h5 style='margin-bottom:0px; margin-top:0px;'>" + postsObj[i].post_title + "</h5><p style='margin-top:0px; padding-top:0 px; font-size: 16px; color: #434343'>" + postsObj[i].post_content.replace(regex, "")
+                .substring(0, 155) + ".....</p></div></a></div>");
               pLength--;
             } else {
               pLength = longNonEmptyParagraphs.length - 1;
