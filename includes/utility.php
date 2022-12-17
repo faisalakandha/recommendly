@@ -9,11 +9,11 @@ function strip_post_content($string) {
     $string = str_replace("\t", ' ', $string);
     // ----- remove multiple spaces ----- 
     $string = trim(preg_replace('/ {2,}/', ' ', $string));
-    // ----- remove special characters ----- 
-    $string = preg_replace('/[^A-Za-z0-9 ]/','',$string);
+    // ----- remove special characters, except for commas and full stops ----- 
+    $string = preg_replace('/[^A-Za-z0-9,. ]/','',$string);  // or: $string = preg_replace('/[^A-Za-z0-9 ]|[,.]/','',$string);
     return $string; 
-
 }
+
 
 function get_bigger_number($A, $B)
 {
