@@ -12,14 +12,15 @@ if ( ! function_exists( 'plugin_log' ) ) {
     // Write the log file.
     $file  = $upload_dir . '/' . $file . '.log';
     $fileName = $file;
+    
+    if (is_file($fileName) && filesize($fileName) > 3000000) 
+    {
+   	unlink($fileName);
+    }
+	  
     $file  = fopen( $file, $mode );
     $bytes = fwrite( $file, current_time( 'mysql' ) . "::" . $entry . "\n" ); 
     fclose( $file ); 
-    if (is_file($fileName) && filesize($fileName) > 3000000) 
-    {
-  		unlink($fileName);
-	}
-
     return $bytes;
   }
 }
