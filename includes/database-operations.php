@@ -12,7 +12,7 @@ function CreateSimilarPosts($postId, $simpid, $score, $category)
     global $wpdb;
     $sqlCheck = "SELECT postid FROM {$GLOBALS['table_name']} WHERE postid = '{$post->ID}' AND category = '{$cat->term_id}' AND simpid = '{$current->ID}'";
     $result = $wpdb->get_results($sqlCheck);
-    if (empty($result)) {
+    if ($wpdb->num_rows == 0) {
     $sql = "INSERT INTO {$GLOBALS['table_name']} (postid,simpid,score,category) VALUES ('{$postId}', '{$simpid}','{$score}','{$category}')";
     dbDelta($sql);
     }
