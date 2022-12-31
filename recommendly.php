@@ -37,11 +37,14 @@ require_once(plugin_dir_path(__FILE__) . 'admin/admin-menu.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/cron-script.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/api.php');
 require_once(plugin_dir_path(__FILE__) . 'frontend/posts.php');
+require_once(plugin_dir_path(__FILE__) . 'includes/updates.php');
+
+add_action('create_internal_links_for_all', 'CheckForNewUpdatesExecutor');
 
 // Deactivation
 
 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
- 
+
 function delete_database()
 {
     global $wpdb;
@@ -50,13 +53,13 @@ function delete_database()
     delete_option('cron_links');
     delete_option('nlpcloud_apikey');
     $wpdb->query($sql);
-
 }
 
-function my_deactivation() {
-    wp_clear_scheduled_hook( 'recommendly_cron_hook' );
+function my_deactivation()
+{
+    wp_clear_scheduled_hook('recommendly_cron_hook');
     delete_database();
     plugin_log("Plugin Deactivated !");
 }
 
-register_deactivation_hook( __FILE__, 'my_deactivation' );
+register_deactivation_hook(__FILE__, 'my_deactivation');
