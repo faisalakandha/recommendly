@@ -54,7 +54,7 @@ function delete_database()
 }
 
 function my_deactivation() {
-    wp_clear_scheduled_hook( 'my_hourly_event' );
+    wp_clear_scheduled_hook( 'recommendly_cron_hook' );
     delete_database();
     plugin_log("Plugin Deactivated !");
 }
