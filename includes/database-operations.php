@@ -12,7 +12,7 @@ function CreateSimilarPosts($postId, $simpid, $score, $category)
     global $wpdb;
 
     // Check if a row with the same postid and simpid values already exists
-    $row_exists = $wpdb->get_row("SELECT * FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}' AND simpid = '{$simpid}'");
+    $row_exists = $wpdb->get_row("SELECT * FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}' AND simpid = '{$simpid}' AND category = '{$category}'");
 
     if ($row_exists) {
         // Update the score column if the row already exists
