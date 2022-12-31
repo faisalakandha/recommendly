@@ -235,8 +235,8 @@ function show_table()
                     </u>
                     <p>This keeps reord for all of the activity for building/removing/managing internal links.</p>
                     <textarea style="padding-top: 16px;" id="output-content" disabled class="form-control"><?php $dir = wp_upload_dir()['basedir'] . '/' . 'WPRecommendly' . '.log';
-                                                                                                            $myfile = fopen($dir, "r") or die("Logs are empty or Unable to open log file !");
-                                                                                                            echo fread($myfile, filesize($dir));
+                                                                                                            $myfile = fopen($dir, "r") or die("Logs are empty or Unable to open log file !");																								fseek($myfile, -3000, SEEK_END);
+                                                                                                            echo fread($myfile, 3000);
                                                                                                             fclose($myfile);
                                                                                                             ?>              
                     </textarea>
