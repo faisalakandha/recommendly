@@ -11,9 +11,33 @@ function CreateSimilarPosts($postId, $simpid, $score, $category)
 {
     global $wpdb;
 
-    $sql = "INSERT INTO {$GLOBALS['table_name']} (postid,simpid,score,category) VALUES ('{$postId}', '{$simpid}','{$score}','{$category}') ON DUPLICATE KEY UPDATE score = '{$score}'";
-    $wpdb->query($sql);
+    // Check if a row with the same postid and simpid values already exists
+    $row_exists = $wpdb->get_row("SELECT * FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}' AND simpid = '{$simpid}'");
 
+    if ($row_exists) {
+        // Update the score column if the row already exists
+        $wpdb->update(
+            $GLOBALS['table_name'],
+            array(
+                'score' => $score,
+            ),
+            array(
+                'postid' => $postId,
+                'simpid' => $simpid,
+            )
+        );
+    } else {
+        // Insert a new row if the row does not already exist
+        $wpdb->insert(
+            $GLOBALS['table_name'],
+            array(
+                'postid' => $postId,
+                'simpid' => $simpid,
+                'score' => $score,
+                'category' => $category,
+            )
+        );
+    }
 }
 
 // Get all the posts related to a specific post in a specific category
