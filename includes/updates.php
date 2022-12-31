@@ -4,6 +4,15 @@ require_once(plugin_dir_path(__FILE__) . '/logging.php');
 
 function CheckForNewUpdates()
 {
+  // Calculate the timestamp for 5 seconds in the future
+  $timestamp = time() + 5;
+
+  // Schedule the event to occur at the specified time
+  wp_schedule_single_event($timestamp, 'create_internal_links_for_all');
+}
+
+function CheckForNewUpdatesExecutor()
+{
 
   $args = array(
     'post_type' => 'post',
@@ -88,6 +97,6 @@ function CronCheckUpdates()
 {
   if (get_option('cron_links') == 1) {
     plugin_log("Cron Job is Running......");
-    CheckForNewUpdates();
+    CheckForNewUpdatesExecutor();
   }
 }
