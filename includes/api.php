@@ -109,7 +109,7 @@ function CreateInternalLinksForAllPosts($req)
     plugin_log("Creating Internal Links for All Existing Posts Started....");
     CheckForNewUpdates();
 
-    return "Successfully Created Internal Links for All Posts !";
+    return "Internal links building started... Please wait until it is done....";
 
 }
 
