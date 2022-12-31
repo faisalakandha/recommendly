@@ -10,12 +10,10 @@ $GLOBALS['table_name'] = $wpdb->prefix . "recommendly";
 function CreateSimilarPosts($postId, $simpid, $score, $category)
 {
     global $wpdb;
-    $sqlCheck = "SELECT postid FROM {$GLOBALS['table_name']} WHERE postid = '{$postId}' AND category = '{$category}' AND simpid = '{$simpid}'";
-    $result = $wpdb->get_results($sqlCheck);
-    if ($wpdb->num_rows == 0) {
-    $sql = "INSERT INTO {$GLOBALS['table_name']} (postid,simpid,score,category) VALUES ('{$postId}', '{$simpid}','{$score}','{$category}')";
-    dbDelta($sql);
-    }
+
+    $sql = "INSERT INTO {$GLOBALS['table_name']} (postid,simpid,score,category) VALUES ('{$postId}', '{$simpid}','{$score}','{$category}') ON DUPLICATE KEY UPDATE score = '{$score}'";
+    $wpdb->query($sql);
+
 }
 
 // Get all the posts related to a specific post in a specific category
