@@ -81,7 +81,7 @@ function CheckForNewUpdatesExecutor()
 
             plugin_log($cat->term_id);
             plugin_log($post_list_cat);
-            sleep(20);
+//            sleep(20);
             CreateSimilarPosts($post->ID, $current->ID, $result, $cat->term_id);
             $percentage = $result * 100;
             plugin_log("PostID {$post->ID} is {$percentage}% similar to PostID {$current->ID} Where CategoryID is {$cat->term_id}");
