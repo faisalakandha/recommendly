@@ -133,7 +133,7 @@ function CheckForUpdates($req)
 {
     $parameters = $req->get_params();
     plugin_log("Checking for new post updates !");
-    CheckForNewUpdates();
+    CheckForNewUpdatesExecutor();
     return "Posts are successfully updated !";
 }
 
