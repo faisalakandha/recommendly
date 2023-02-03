@@ -90,7 +90,7 @@ function show_table()
                         credentials: 'same-origin',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-WP-Nonce' : "<?php echo wp_create_nonce('wp_rest') ?>"
+                            'X-WP-Nonce': "<?php echo wp_create_nonce('wp_rest') ?>"
                         },
                         body: JSON.stringify(data),
                     })
@@ -107,11 +107,18 @@ function show_table()
 
             $("document").ready(function() {
                 var cronOptions = <?php echo get_option('cron_links'); ?>;
-                console.log(cronOptions);
                 if (cronOptions == 1) {
                     $("#enable").prop("checked", true);
                 } else {
                     $("#disable").prop("checked", true);
+                }
+
+                // Enable or Disable logs
+                var logOptions = <?php echo get_option('recommendly_logs'); ?>;
+                if (logOptions == 1) {
+                    $("#enablelog").prop("checked", true);
+                } else {
+                    $("#disablelog").prop("checked", true);
                 }
 
 
@@ -166,6 +173,24 @@ function show_table()
                         option: optiondisable
                     };
                     postData(dData, siteUrl + '/wp-json/recommendly/v1/cronoption');
+                });
+
+                // Enable or Disable Logs
+
+                $("#enablelog").click(function() {
+                    var optionenable = $(this).val();
+                    var eData = {
+                        option: optionenable
+                    };
+                    postData(eData, siteUrl + '/wp-json/recommendly/v1/logoption');
+                });
+
+                $("#disablelog").click(function() {
+                    var optiondisable = $(this).val();
+                    var dData = {
+                        option: optiondisable
+                    };
+                    postData(dData, siteUrl + '/wp-json/recommendly/v1/logoption');
                 });
 
             });
@@ -233,9 +258,14 @@ function show_table()
                     <u>
                         <h3>Logs:</h3>
                     </u>
+                    <p style="display:contents;">Do you want the logs to be enabled ?</p>
+                    <input type="radio" id="enablelog" name="optionlog" value="1">
+                    <label for="option1">Yes</label> &nbsp;
+                    <input type="radio" id="disablelog" name="optionlog" value="0">
+                    <label for="option2">No</label><br><br>
                     <p>This keeps reord for all of the activity for building/removing/managing internal links.</p>
                     <textarea style="padding-top: 16px;" id="output-content" disabled class="form-control"><?php $dir = wp_upload_dir()['basedir'] . '/' . 'WPRecommendly' . '.log';
-                                                                                                            $myfile = fopen($dir, "r") or die("Logs are empty or Unable to open log file !");																								
+                                                                                                            $myfile = fopen($dir, "r") or die("Logs are empty or Unable to open log file !");
                                                                                                             fseek($myfile, -10000, SEEK_END);
                                                                                                             echo fread($myfile, 10000);
                                                                                                             fclose($myfile);
