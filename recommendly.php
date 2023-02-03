@@ -18,6 +18,7 @@ function my_plugin_activate()
     require_once(plugin_dir_path(__FILE__) . 'includes/database-manager.php');
     create_recommendly_database();
     add_option('cron_links', 0);
+    add_option('recommendly_logs', 0);
 }
 register_activation_hook(__FILE__, 'my_plugin_activate');
 
