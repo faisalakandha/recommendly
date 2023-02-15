@@ -2,11 +2,9 @@
 require_once ABSPATH .
     "wp-content/plugins/recommendly/includes/database-operations.php";
 
-function ti_custom_javascript()
+function ti_custom_related_posts($content)
 {
-    $datajs = 0;
     if (is_singular("post")) {
-
         $id = get_the_ID();
         $post_categories = get_the_category($id);
         $postIds = [];
@@ -19,9 +17,8 @@ function ti_custom_javascript()
             }
 
             foreach (array_unique($myIds) as $myId) {
-                if (!in_array($myId, $postIds)) {
+                if (!in_array($myId, $postIds) && $myId != $id) {
                     array_push($postIds, $myId);
-                    break;
                 }
             }
         }
@@ -37,53 +34,47 @@ function ti_custom_javascript()
                 foreach ($posts as &$post) {
                     $post->permalink = get_permalink($post->ID);
                 }
-                $datajs = json_encode($posts);
+
+                $related_posts = [];
+                foreach ($posts as $post) {
+                    if (!in_array($post->ID, $related_posts)) {
+                        $related_posts[] = $post->ID;
+                    }
+                }
+
+                if (!empty($related_posts)) {
+                    $related_posts_html = "<div>";
+                    $related_posts_html .=
+                        '<h6 style="margin-bottom:9px; color: #1d2027;font-size: 2em;">Vous pourriez également aimer ceci :</h6>';
+                    foreach ($related_posts as $post_id) {
+                        $post = get_post($post_id);
+                        $related_posts_html .=
+                            '<div style="background-color:white; padding: 0px 0px 0px 0px;">';
+                        $related_posts_html .=
+                            '<p style="margin-bottom:0px; margin-top:0px;">';
+                        $related_posts_html .=
+                            '<a style="text-decoration: none; color: #1d2027;font-size: 1.5em" href="' .
+                            get_permalink($post->ID) .
+                            '">' .
+                            $post->post_title .
+                            "</a>";
+                        $related_posts_html .= "</p>";
+                        $related_posts_html .=
+                            '<p style="margin-top:0px; padding-top:0 px; color: #434343">';
+                        $related_posts_html .=
+                            substr(strip_tags($post->post_content), 0, 170) .
+                            "...";
+                        $related_posts_html .= "</p>";
+                        $related_posts_html .= "</div>";
+                    }
+                    $related_posts_html .= "</div>";
+
+                    $content .= $related_posts_html;
+                }
             }
         }
-
-        if (!isset($postIds)) {
-            if (sizeof($postIds) == 0) {
-                $datajs = 0;
-            }
-        }
-        ?>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script type="text/javascript">
-      var posts = JSON.stringify(<?php echo $datajs; ?>);
-      var postsObj = JSON.parse(posts);
-      if (postsObj != 0) {
-        $(document).ready(function() {
-          var regex = /<[^>]+>|\s{2,}|\n|[^a-zA-Z0-9\s]/g;
-          var paragraphs = $('p');
-
-          // Use the .filter() method and a custom function to select only the paragraphs
-          // that have at least 15 words and are not empty
-          var longNonEmptyParagraphs = paragraphs.filter(function() {
-            // The custom function should return true if the paragraph contains at least
-            // 50 words and is not empty, and false otherwise
-            return $(this).text().trim().split(' ').length >= 50 && $(this).text().trim() !== '';
-          });
-
-          var pLength = longNonEmptyParagraphs.length - 1;
-
-          for (var i = 0; i <= postsObj.length - 1; i++) {
-            if (pLength >= 0) {
-              $(longNonEmptyParagraphs[pLength]).after("<div><h6 style='margin-bottom:9px; color: #1d2027;'>You Might Also Like This:</h6><div style='background-color:white; padding: 0px 0px 0px 0px;'><h5 style='margin-bottom:0px; margin-top:0px;'><a style='text-decoration: none; color: #1d2027' href=" + postsObj[i].permalink + ">" + postsObj[i].post_title + "</a></h5><p style='margin-top:0px; padding-top:0 px; font-size: 16px; color: #434343'>" + postsObj[i].post_content.replace(regex, "")
-                .substring(0, 170) + ".....</p></div></div>");
-              pLength--;
-            } else {
-              pLength = longNonEmptyParagraphs.length - 1;
-              longNonEmptyParagraphs[pLength].html(postsObj[i].post_title);
-              pLength--;
-            }
-          }
-        });
-      }
-    </script>
-<?php
     }
+    return $content;
 }
-add_action("wp_head", "ti_custom_javascript");
-
+add_filter("the_content", "ti_custom_related_posts");
 ?>
